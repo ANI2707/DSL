@@ -11,7 +11,7 @@ class set1{
 				arr2[i]=-1;
 			}
 		}
-		void insert(){
+		int insert(int arr[]){
 			int key;
 			cout<<"Enter a element to insert:";
 			cin>>key;
@@ -19,16 +19,17 @@ class set1{
 			
 			for(int i=0;i<20;i++){
 			
-				if(arr1[loc]==-1){
-					arr1[loc]=key;
+				if(arr[loc]==-1){
+					arr[loc]=key;
 				}
-				else if(arr1[loc]!=-1 && arr1[loc]==key){
+				else if(arr[loc]!=-1 && arr[loc]==key){
 					break;
 				}
 				else{
 					loc=loc+1;
 				}
 			}
+			
 			
 		}
 		void display(){
@@ -80,10 +81,10 @@ class set1{
 		    }
 		}
 		
-		int count(){
+		int count(int arr[]){
 		    int cnt=0;
 		    for(int i=0;i<20;i++){
-		        if(arr1[i]!=-1){
+		        if(arr[i]!=-1){
 		            cnt++;
 		        }
 		    }
@@ -91,10 +92,11 @@ class set1{
 		}
 		
 		void union1(){
+			int flag;
 		    string reply;
 		    cout<<"Enter 1st set";
 		    do{
-		        insert();
+		        insert(arr1);
 		        cout<<"Do you want to continue(y/n):";
 		        cin>>reply;
 		    }
@@ -102,53 +104,34 @@ class set1{
 		        
 		    cout<<"Enter 2nd set:";
 		    do{
-		        int key;
-			    cout<<"Enter a element to insert:";
-			    cin>>key;
-			    int loc=0;
-			
-			    for(int i=0;i<20;i++){
-			
-				    if(arr1[loc]==-1){
-    					arr1[loc]=key;
-				    }
-				    else if(arr1[loc]!=-1 && arr1[loc]==key){
-					    break;
-				    }
-				    else{
-        				loc=loc+1;
-				    }
-			    }
+		        insert(arr2);
 			    cout<<"Do you want to continue(y/n):";
 		        cin>>reply;
 		    }
 		    while(reply!="n");
-			int cnt2=0;
-			for(int i=0;i<20;i++){
-		        if(arr2[i]!=-1){
-		            cnt2++;
-		        }
-		    }
-		    int m=count();
-		    int n=cnt2;
+		    int m=count(arr1);
+		    int n=count(arr2);
 		    int arr3[20];
 		    int k=0;
 		    for(int i=0;i<m;i++){
 		        arr3[k]=arr1[i];
 		        k++;
 		    }
-		    for(int i=0;i<m;i++){
-		        for(int j=0;j<n;j++){
-		            if(arr1[i]==arr2[j]){
+		    for(int i=0;i<n;i++){
+		    	flag=0;
+		        for(int j=0;j<m;j++){
+		            if(arr2[i]==arr1[j]){
+		            	flag=1;
 		                break;
 		            }
-		            else{
-		                arr3[k]=arr2[j];
-		                k++;
-		            }
 		        }
+		        if(flag!=1){
+		    		arr3[k]=arr2[i];
+		    		k++;
+				}
 		    }
-		    cout<<"Union";
+		    
+		    cout<<"Union: ";
 		    for(int i=0;i<k;i++){
 		        if(arr3[i]==-1){
 		            break;
@@ -157,20 +140,104 @@ class set1{
 		        cout<<arr3[i]<<",";
 		        }
 		    }
-		    
-			
-	    }
+		}
+		
+		void intersection1(){
+			string reply;
+		    cout<<"Enter 1st set";
+		    do{
+		        insert(arr1);
+		        cout<<"Do you want to continue(y/n):";
+		        cin>>reply;
+		    }
+		    while(reply!="n");
+		        
+		    cout<<"Enter 2nd set:";
+		    do{
+		        insert(arr2);
+			    cout<<"Do you want to continue(y/n):";
+		        cin>>reply;
+		    }
+		    while(reply!="n");
+		    int m=count(arr1);
+		    int n=count(arr2);
+		    int arr3[20];
+		    int k=0;
+		    for(int i=0;i<m;i++){
+		    	for(int j=0;j<n;j++){
+		    		if(arr1[i]==arr2[j]){
+		    			arr3[k]=arr1[i];
+		    			k++;
+					}
+				}
+			}
+			cout<<"Intersection: ";
+		    for(int i=0;i<k;i++){
+		        if(arr3[i]==-1){
+		            break;
+		        }
+		        else{
+		        cout<<arr3[i]<<",";
+		        }
+		    }
+		}
+		void difference1(){
+			string reply;
+		    cout<<"Enter 1st set";
+		    do{
+		        insert(arr1);
+		        cout<<"Do you want to continue(y/n):";
+		        cin>>reply;
+		    }
+		    while(reply!="n");
+		        
+		    cout<<"Enter 2nd set:";
+		    do{
+		        insert(arr2);
+			    cout<<"Do you want to continue(y/n):";
+		        cin>>reply;
+		    }
+		    while(reply!="n");
+		    int m=count(arr1);
+		    int n=count(arr2);
+		    int arr3[20];
+		    int k=0;
+		    int flag=0;
+		    for(int i=0;i<m;i++){
+		    	arr3[k]=arr1[i];
+		    	k++;
+			}
+			for(int i=0;i<m;i++){
+				flag=0;
+				for(int j=0;j<n;j++){
+					if(arr3[i]==arr2[j]){
+						flag=1;
+						break;
+					}
+				}
+				if(flag==0){
+					cout<<"Difference(A-B): ";
+		        		if(arr3[i]==-1){
+		            		break;
+		        		}
+		        		else{
+		        			cout<<arr3[i]<<",";
+		       			}
+		    		
+				}
+			}
+		}
 };
 int main(){
 	set1 s;
 	int ch;
 	while(1){
-		cout<<"\n1.Insert\n2.Display\n3.Delete\n4.Search\n5.Count\n6.Union\n7.Exit\n";
+		cout<<"\n1.Insert\n2.Display\n3.Delete\n4.Search\n5.Count\n6.Union\n7.Intersection\n8.Difference\n9.Exit\n";
 		cout<<"Enter a choice:";
 		cin>>ch;
 		switch(ch){
 			case 1:
-				s.insert();
+				s.insert(s.arr1);
 				break;		
 			case 2:
 				s.display();
@@ -182,13 +249,19 @@ int main(){
 				s.search();
 				break;
 			case 5:
-			    s.count();
+			    s.count(s.arr1);
 			    break;
 			case 6:
 			    s.union1();
 			    break;
 			case 7:
-			    exit(1);
+			    s.intersection1();
+			    break;
+			case 8:
+				s.difference1();
+				break;
+			case 9:
+				exit(1);
 			default:
 				cout<<"Enter a valid choice";	
 			}
