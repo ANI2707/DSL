@@ -6,6 +6,31 @@ class node{
 		node* left;
 		node* right;
 };
+class stack1{
+    public:
+        node* arr[20];
+        int top;
+        stack1(){
+            top=-1;
+        }
+        void push(node* temp){
+            top++;
+            arr[top]=temp;
+        }
+        int empty(){
+            if(top==-1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        node* pop(){
+            node* p=arr[top];
+            top--;
+            return p;
+        }
+};
 class tree{
 	public:
 		node* root;
@@ -52,6 +77,31 @@ class tree{
 			postorder(t->right);
 			cout<<t->data<<" ";
 		}
+		void nonrecursive_inorder(node* t){
+		    stack1 st;
+		    while(t!=NULL || st.empty()!=1){
+		        while(t!=NULL){
+		            st.push(t);
+		            t=t->left;
+		        }
+		        t=st.pop();
+		        cout<<t->data<<" ";
+		        t=t->right;
+		    }
+		    
+		}
+		void nonrecursive_preorder(node* t){
+		    stack1 st;
+		    while(t!=NULL || st.empty()!=1){
+		        while(t!=NULL){
+		            cout<<t->data<<" ";
+		            st.push(t);
+		            t=t->left;
+		        }
+		        t=st.pop();
+		        t=t->right;
+		    }
+		}
 };
 int main(){
 	tree t;
@@ -73,6 +123,12 @@ int main(){
 			    t.postorder(t.root);
 			    break;
 			case 5:
+			    t.nonrecursive_inorder(t.root);
+			    break;
+			case 6:
+			    t.nonrecursive_preorder(t.root);
+			    break;
+			case 7:
 			    exit(1);
 		}
 	}
