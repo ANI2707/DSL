@@ -44,16 +44,16 @@ class tree{
 			if(key=="NULL"){
 			    return NULL;
 			}
-			node* root=new node();
-			root->data=key;
-			root->left=NULL;
-			root->right=NULL;
+			node* temp=new node();
+			temp->data=key;
+			temp->left=NULL;
+			temp->right=NULL;
 		    cout<<"Enter the left part(if not enter NULL):"<<key<<endl;
-			root->left=create();
+			temp->left=create();
 			cout<<"Enter the right part(if not enter NULL):"<<key<<endl;
-			root->right=create();
+			temp->right=create();
 			
-			return root;
+			return temp;
 		}
 		void preorder(node* t){
 			if(t==NULL)
